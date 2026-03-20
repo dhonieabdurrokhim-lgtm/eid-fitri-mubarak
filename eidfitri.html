@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selamat Idul Fitri 1447 H - Abdurrokhim Romdhoni</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #ffd700;
+            --emerald: #064e3b;
+            --night: #020617;
+            --text: #f8fafc;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--night);
+            color: var(--text);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* --- LAYER 1: GATEWAY & VALIDASI --- */
+        #gate-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #0f172a, #020617);
+            z-index: 9999; display: flex; justify-content: center; align-items: center;
+            transition: transform 1.2s cubic-bezier(0.87, 0, 0.13, 1);
+        }
+        .gate-box {
+            text-align: center; background: rgba(255,255,255,0.05); padding: 3rem;
+            border-radius: 2rem; border: 1px solid var(--gold); backdrop-filter: blur(10px);
+            max-width: 400px; width: 90%;
+        }
+        .gate-box h2 { color: var(--gold); margin-bottom: 1rem; }
+        .gate-box input {
+            width: 100%; padding: 12px; border-radius: 10px; border: none; margin: 15px 0;
+            text-align: center; font-size: 1.1rem; outline: none; background: #fff; color: #333;
+        }
+        .btn-entry {
+            background: var(--gold); color: #000; border: none; padding: 12px 30px;
+            border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        .btn-entry:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--gold); }
+
+        /* POPUP VALIDASI */
+        #validation-popup {
+            position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
+            background: #ef4444; color: white; padding: 15px 25px; border-radius: 10px;
+            display: none; z-index: 10000; animation: shake 0.5s;
+        }
+        @keyframes shake { 0%, 100% { transform: translateX(-50%); } 25% { transform: translateX(-55%); } 75% { transform: translateX(-45%); } }
+
+        /* --- LAYER 2: BACKGROUND & ORNAMEN --- */
+        .decor { position: fixed; pointer-events: none; z-index: 1; opacity: 0.6; }
+        .ketupat { top: 10%; left: 5%; font-size: 3rem; animation: float 4s infinite ease-in-out; }
+        .bedug { bottom: 10%; right: 5%; font-size: 4rem; animation: float 5s infinite ease-in-out reverse; }
+        .lantern { top: -20px; right: 10%; font-size: 3rem; animation: swing 3s infinite ease-in-out; transform-origin: top; }
+        
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        @keyframes swing { 0%, 100% { transform: rotate(-10deg); } 50% { transform: rotate(10deg); } }
+
+        /* --- MAIN CONTENT SCROLLABLE --- */
+        #main-wrapper { display: none; width: 100%; max-width: 800px; margin: 0 auto; padding: 100px 20px 50px; position: relative; z-index: 5; }
+        .section-layer {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.2);
+            border-radius: 25px; padding: 40px 20px; margin-bottom: 50px; text-align: center;
+            backdrop-filter: blur(5px); opacity: 0; transform: translateY(30px); transition: 1s;
+        }
+        .section-layer.show { opacity: 1; transform: translateY(0); }
+
+        /* --- LAYER 3: COUNTDOWN GANDA --- */
+        .cd-container { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        @media (max-width: 600px) { .cd-container { grid-template-columns: 1fr; } }
+        .cd-box { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 15px; border-top: 3px solid var(--gold); }
+        .cd-box h4 { font-size: 0.8rem; margin-bottom: 10px; color: var(--gold); }
+        .timer { display: flex; justify-content: center; gap: 8px; font-weight: bold; }
+        .timer span { background: var(--gold); color: #000; padding: 5px; border-radius: 5px; min-width: 35px; display: inline-block; }
+
+        /* --- LAYER 4: UCAPAN & DOA --- */
+        .arabic { font-family: 'Amiri', serif; font-size: 2rem; margin: 30px 0; line-height: 1.8; direction: rtl; color: #fff; }
+        .highlight { color: var(--gold); font-weight: 800; font-size: 1.4rem; display: block; margin: 15px 0; }
+        .doa-list { font-style: italic; color: #cbd5e1; margin-top: 20px; font-size: 0.9rem; }
+
+        /* --- QUOTES SECTION --- */
+        .quotes-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .quote-item {
+            background: rgba(255, 215, 0, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 4px solid var(--gold);
+            text-align: left;
+            position: relative;
+        }
+        .quote-item i {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 2rem;
+            color: rgba(255, 215, 0, 0.1);
+        }
+        .quote-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #ddd;
+        }
+
+        /* --- LAYER 5: INTERACTIVE THR --- */
+        .thr-flex { display: flex; gap: 15px; justify-content: center; margin-top: 30px; flex-wrap: wrap; }
+        .btn-thr {
+            padding: 15px 25px; border-radius: 15px; border: none; font-weight: bold; cursor: pointer;
+            transition: 0.3s; display: flex; align-items: center; gap: 10px; font-size: 1.1rem;
+        }
+        .btn-mau { background: #ef4444; color: white; }
+        .btn-kasih { background: #22c55e; color: white; }
+        .btn-thr:hover { transform: translateY(-5px); filter: brightness(1.2); }
+
+        /* MODAL RESULT */
+        #modal-thr {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); z-index: 10001; display: none;
+            justify-content: center; align-items: center; text-align: center;
+        }
+        .modal-body { background: #1e293b; padding: 40px; border-radius: 20px; border: 2px solid var(--gold); max-width: 350px; }
+        .modal-body h2 { font-size: 4rem; margin-bottom: 10px; }
+        .btn-close { margin-top: 20px; background: #64748b; color: white; border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO TAKBIRAN -->
+    <audio id="takbirAudio" loop>
+        <source src="http://googleusercontent.com/file_content/1" type="audio/mpeg">
+    </audio>
+
+    <!-- LAYER 1: GATE -->
+    <div id="gate-overlay">
+        <div class="gate-box">
+            <i class="fas fa-mosque" style="font-size: 3rem; color: var(--gold);"></i>
+            <h2 style="margin-top: 15px;">Assalamualaikum</h2>
+            <p style="font-size: 0.8rem; opacity: 0.8;">Silakan masukkan nama Anda untuk menerima ucapan spesial ini.</p>
+            <input type="text" id="userNameInput" placeholder="Nama Anda..." autocomplete="off">
+            <button class="btn-entry" onclick="validateAndOpen()">Buka Ucapan ✨</button>
+        </div>
+    </div>
+
+    <!-- VALIDATION POPUP -->
+    <div id="validation-popup">ye elah mo kenal aja ga boleh pelit amat lu! 🙄</div>
+
+    <!-- LAYER 2: DECORATIONS -->
+    <div class="decor ketupat">🫔</div>
+    <div class="decor bedug">🥁</div>
+    <div class="decor lantern">🏮</div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main-wrapper">
+        
+        <!-- SECTION 1: SALAM & USER -->
+        <div class="section-layer" id="sec-1">
+            <h3>Selamat Datang,</h3>
+            <h1 id="displayName" style="color: var(--gold); text-transform: capitalize; font-size: 2.5rem;">Tamu Kehormatan</h1>
+            <p style="margin-top: 10px;">Mari merayakan hari kemenangan bersama!</p>
+            
+            <div class="cd-container">
+                <div class="cd-box">
+                    <h4>Menuju 1 Syawal 1447 H</h4>
+                    <div class="timer" id="timer-lebaran">
+                        <div><span id="l-d">00</span><br><small>H</small></div>
+                        <div><span id="l-h">00</span><br><small>J</small></div>
+                        <div><span id="l-m">00</span><br><small>M</small></div>
+                    </div>
+                </div>
+                <div class="cd-box">
+                    <h4>Menuju Sholat Id</h4>
+                    <div class="timer" id="timer-sholat">
+                        <div><span id="s-d">00</span><br><small>H</small></div>
+                        <div><span id="s-h">00</span><br><small>J</small></div>
+                        <div><span id="s-m">00</span><br><small>M</small></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: CORE MESSAGE -->
+        <div class="section-layer" id="sec-2">
+            <h2 style="color: var(--gold);">Happy Eid Fitri Mubarak</h2>
+            <p>Selamat Hari Raya Idul Fitri 1 Syawal 1447 Hijriyyah</p>
+            
+            <div class="arabic">
+                تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ تَقَبَّلْ ياَ كَرِيْمُ وَجَعَلَنَا اللهُ وَاِيَّاكُمْ مِنَ الْعَاءِدِيْنَ وَالْفَائِزِيْنَ وَالْمَقْبُوْلِيْنَ كُلُّ عاَمٍ وَأَنْتُمْ بِخَيْرٍ
+            </div>
+
+            <span class="highlight">Mohon Maaf Lahir dan Batin</span>
+            <p>Ikhlas dari kami:</p>
+            <h3 style="margin-top: 5px;">Abdurrokhim Romdhoni & Keluarga</h3>
+
+            <div class="doa-list">
+                "Semoga Allah memberkati setiap langkah kita, <br>
+                membersihkan hati kita dari benci, <br>
+                dan mempertemukan kita kembali di Ramadhan berikutnya."
+            </div>
+        </div>
+
+        <!-- SECTION 3: QUOTES HARI RAYA -->
+        <div class="section-layer" id="sec-3">
+            <h4 style="color: var(--gold); margin-bottom: 20px; font-size: 1.5rem;">Mutiara Idul Fitri</h4>
+            <div class="quotes-container">
+                <div class="quote-item">
+                    <i class="fas fa-quote-right"></i>
+                    <p class="quote-text">"Idul Fitri bukanlah tentang pakaian baru yang membalut tubuh, namun tentang iman dan ketaatan yang semakin bertambah kepada Sang Pencipta."</p>
+                </div>
+                <div class="quote-item">
+                    <i class="fas fa-quote-right"></i>
+                    <p class="quote-text">"Kemenangan sejati adalah saat kita berhasil menaklukkan ego dalam diri dan menggantinya dengan kerendahan hati untuk saling memaafkan."</p>
+                </div>
+                <div class="quote-item">
+                    <i class="fas fa-quote-right"></i>
+                    <p class="quote-text">"Jarak mungkin memisahkan raga, namun doa dan maaf akan selalu menemukan jalannya untuk menyatukan hati di hari yang suci ini."</p>
+                </div>
+            </div>
+            
+            <!-- PENUTUP SALAM SETELAH QUOTES -->
+            <div style="margin-top: 40px; border-top: 1px solid rgba(255,215,0,0.2); padding-top: 20px;">
+                <p style="font-size: 1.1rem; letter-spacing: 1px;">Akhir kata, kami sekeluarga mengucapkan:</p>
+                <h2 style="color: var(--gold); margin: 10px 0;">Wassalamualaikum Warahmatullahi Wabarakatuh</h2>
+                <p style="font-size: 0.9rem; opacity: 0.7;">Sampai jumpa di hari yang fitri!</p>
+            </div>
+        </div>
+
+        <!-- SECTION 4: INTERACTIVE THR -->
+        <div class="section-layer" id="sec-4">
+            <h2 style="color: var(--gold);">Eits, Ada Sesuatu... 🎁</h2>
+            <p>Pilih salah satu di bawah ini:</p>
+            <div class="thr-flex">
+                <button class="btn-thr btn-mau" onclick="thrInteraction('mau')">
+                    <i class="fas fa-hand-holding-usd"></i> Mau THR
+                </button>
+                <button class="btn-thr btn-kasih" onclick="thrInteraction('kasih')">
+                    <i class="fas fa-gift"></i> Kasih THR
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- THR MODAL -->
+    <div id="modal-thr">
+        <div class="modal-body">
+            <h2 id="modal-emoji">😒</h2>
+            <p id="modal-msg" style="font-size: 1.2rem; line-height: 1.5;"></p>
+            <div id="modal-action-area" style="margin-top: 20px;"></div>
+            <button class="btn-close" onclick="closeThr()">Tutup</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 1. VALIDASI & PEMBUKAAN ---
+        function validateAndOpen() {
+            const name = document.getElementById('userNameInput').value.trim();
+            const popup = document.getElementById('validation-popup');
+            
+            if (name === "") {
+                popup.style.display = 'block';
+                setTimeout(() => popup.style.display = 'none', 3000);
+                return;
+            }
+
+            document.getElementById('displayName').innerText = name;
+            document.getElementById('gate-overlay').style.transform = "translateY(-100%)";
+            
+            // Audio Playback
+            const audio = document.getElementById('takbirAudio');
+            audio.play().catch(() => console.log("User interaction required for audio"));
+
+            setTimeout(() => {
+                document.getElementById('main-wrapper').style.display = 'block';
+                revealSections();
+            }, 600);
+        }
+
+        // --- 2. ANIMASI REVEAL ---
+        function revealSections() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) entry.target.classList.add('show');
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.section-layer').forEach(sec => observer.observe(sec));
+        }
+
+        // --- 3. COUNTDOWN ---
+        function updateCountdowns() {
+            const now = new Date().getTime();
+            
+            // Lebaran 1 Syawal: Jumat, 20 Maret 2026 (Malam Takbir)
+            const d1 = new Date("March 20, 2026 18:00:00").getTime();
+            // Sholat Id: Sabtu, 21 Maret 2026 06:30
+            const d2 = new Date("March 21, 2026 06:30:00").getTime();
+
+            const calc = (target, prefix) => {
+                const diff = target - now;
+                if (diff < 0) return;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById(`${prefix}-d`).innerText = d.toString().padStart(2, '0');
+                document.getElementById(`${prefix}-h`).innerText = h.toString().padStart(2, '0');
+                document.getElementById(`${prefix}-m`).innerText = m.toString().padStart(2, '0');
+            };
+
+            calc(d1, 'l');
+            calc(d2, 's');
+        }
+        setInterval(updateCountdowns, 1000);
+        updateCountdowns();
+
+        // --- 4. THR INTERACTION ---
+        function thrInteraction(type) {
+            const modal = document.getElementById('modal-thr');
+            const emoji = document.getElementById('modal-emoji');
+            const msg = document.getElementById('modal-msg');
+            const action = document.getElementById('modal-action-area');
+            
+            modal.style.display = 'flex';
+            action.innerHTML = "";
+
+            if (type === 'mau') {
+                emoji.innerText = "😒";
+                msg.innerHTML = "Ya kalo mau THR ya kerumah lah!<br><small>Jangan minta di web doang, ga bisa di-copy duitnya.</small>";
+                action.innerHTML = `<a href="https://goo.gl/maps/W9KXhxr85sKb14K57" target="_blank" style="color:var(--gold); font-weight:bold; text-decoration:none;"><i class="fas fa-map-marker-alt"></i> Klik Lokasi Rumah</a>`;
+            } else {
+                emoji.innerText = "😭❤️";
+                msg.innerHTML = "Alhamdulillah ada yang ngasih THR...<br><small>Jazakallah Khairan! Orang baik rezekinya lancar.</small>";
+                action.innerHTML = `<p style='font-size:0.9rem; color:#cbd5e1;'>Kalo mau transfer WA dulu kesini ya:<br><strong style='color:#22c55e;'>+62896325849850</strong></p>`;
+            }
+        }
+
+        function closeThr() {
+            document.getElementById('modal-thr').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
